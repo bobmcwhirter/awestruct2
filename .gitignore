@@ -1,0 +1,8 @@
+*.swp
+*.gem
+_tmp
+.DS_Store
+Gemfile.lock
+#Editor
+*.tmproj
+spec/.sass-cache/*/*.scssc
