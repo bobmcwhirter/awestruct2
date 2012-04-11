@@ -1,4 +1,5 @@
 
+require 'awestruct/handlers/base_handler'
 
 module Awestruct
   module Handlers
@@ -9,7 +10,7 @@ module Awestruct
       end
 
       def rendered_content(context)
-        content = delegate.rendered_content(context) 
+        content = delegate.raw_content
 
         return nil if content.nil?
         return content unless site.interpolate

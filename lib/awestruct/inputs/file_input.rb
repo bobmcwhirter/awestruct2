@@ -24,10 +24,6 @@ module Awestruct
         read
       end
 
-      def rendered_content(context)
-        read
-      end
-
     end
   end
 end

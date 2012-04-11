@@ -1,10 +1,13 @@
 
+require 'awestruct/handlers/base_handler'
+require 'yaml'
+
 module Awestruct
   module Handlers
-    class YamlHandler
+    class YamlHandler < BaseHandler
 
       def initialize(site, delegate)
-        super(site, delegate)
+        super
       end
 
       def front_matter
