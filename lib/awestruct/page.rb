@@ -6,20 +6,27 @@ module Awestruct
   class Page < OpenCascade
 
     attr_accessor :site
-    attr_accessor :input
-    attr_accessor :handlers
+    attr_accessor :handler
 
-    def initialize(site, input)
-      @site = site
-      @input = input
-      @handlers = []
+    attr_reader :dependencies
+
+    def initialize(site, handler)
+      @site         = site
+      @handler      = handler
+      @dependencies = []
+    end
+
+    def stale?
+      handler.stale? || @dependencies.any?(&:stale?) 
+    end
+
+    def raw_content
+      handler.raw_content
     end
 
     def rendered_content(context=nil)
-      return @input.read if handlers.empty?
-
       ( context = site.create_context( self ) ) unless context
-      delegate.rendered_content( context )
+      handler.rendered_content( context )
     end
 
   end

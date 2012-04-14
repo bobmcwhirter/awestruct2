@@ -1,6 +1,6 @@
 require 'fileutils'
 
-require 'awestruct/inputs/file_input'
+require 'awestruct/handlers/file_handler'
 require 'awestruct/handlers/front_matter_handler'
 
 describe Awestruct::Handlers::FrontMatterHandler do
@@ -9,28 +9,30 @@ describe Awestruct::Handlers::FrontMatterHandler do
     @site = OpenCascade.new :encoding=>false
   end
 
+  before :each do
+  end
+
+  def file_input(filename)
+    filename = Pathname.new( File.dirname(__FILE__) + "/test-data/#{filename}" )
+    Awestruct::Handlers::FileHandler.new( @site, filename )
+  end
+
   it "should be able to split front-matter from content" do 
-    filename = Pathname.new( File.dirname(__FILE__) + "/test-data/front-matter-file.txt" )
-    input = Awestruct::Inputs::FileInput.new( @site, filename )
-    handler = Awestruct::Handlers::FrontMatterHandler.new( @site, input )
+    handler = Awestruct::Handlers::FrontMatterHandler.new( @site, file_input( "front-matter-file.txt" ) )
     handler.front_matter.should_not be_nil
     handler.front_matter['foo'].should == 'bar'
     handler.raw_content.strip.should == 'This is some content'
   end
 
   it "should be able to split front-matter from content for files without actual front-matter" do 
-    filename = Pathname.new( File.dirname(__FILE__) + "/test-data/front-matter-file-no-front.txt" )
-    input = Awestruct::Inputs::FileInput.new( @site, filename )
-    handler = Awestruct::Handlers::FrontMatterHandler.new( @site, input )
+    handler = Awestruct::Handlers::FrontMatterHandler.new( @site, file_input( "front-matter-file-no-front.txt" ) )
     handler.front_matter.should_not be_nil
     handler.front_matter.should be_empty
     handler.raw_content.strip.should == 'This is some content'
   end
 
   it "should be able to split front-matter from content for files without actual content" do 
-    filename = Pathname.new( File.dirname(__FILE__) + "/test-data/front-matter-file-no-content.txt" )
-    input = Awestruct::Inputs::FileInput.new( @site, filename )
-    handler = Awestruct::Handlers::FrontMatterHandler.new( @site, input )
+    handler = Awestruct::Handlers::FrontMatterHandler.new( @site, file_input( "front-matter-file-no-content.txt" ) )
     handler.front_matter.should_not be_nil
     handler.front_matter['foo'].should == 'bar'
     handler.raw_content.should be_nil

@@ -8,9 +8,13 @@ module Awestruct
       attr_reader :site
       attr_reader :delegate
 
-      def initialize(site, delegate)
+      def initialize(site, delegate=nil)
         @site     = site
         @delegate = delegate
+      end
+
+      def stale?
+        false
       end
 
       def front_matter
