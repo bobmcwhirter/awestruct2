@@ -11,9 +11,26 @@ module Awestruct
     attr_reader :dependencies
 
     def initialize(site, handler)
-      @site         = site
-      @handler      = handler
-      @dependencies = []
+      @site          = site
+      @handler       = handler
+      @dependencies  = []
+    end
+
+    def relative_source_path
+      handler.relative_source_path
+    end
+
+    def output_path
+      @output_path || handler.output_path
+    end
+
+    def output_path=(path)
+      case ( path )
+        when Pathname:
+          @output_path = path
+        else
+          @output_path = Pathname.new( path )
+      end
     end
 
     def stale?

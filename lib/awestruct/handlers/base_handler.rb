@@ -17,6 +17,19 @@ module Awestruct
         false
       end
 
+      def relative_source_path 
+        return @delegate.relative_source_path if @delegate
+        nil
+      end
+
+      def output_filename
+        File.basename( relative_source_path )
+      end
+
+      def output_path
+        File.join( File.dirname( relative_source_path ), output_filename )
+      end
+
       def front_matter
         return @delegate.front_matter if @delegate
         {}

@@ -11,6 +11,10 @@ module Awestruct
         super( site, delegate )
       end
 
+      def output_filename
+        File.basename( relative_source_path, '.haml' )
+      end
+
       def rendered_content(context)
         rendered = ''
         options = (context.site.haml || {}).inject({}){|h,(k,v)| h[k.to_sym] = v; h } 

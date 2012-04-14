@@ -12,15 +12,25 @@ module Awestruct
     attr_reader :pages
     attr_reader :layouts
 
+    attr_reader :config
     attr_reader :engine
 
-    def initialize(engine)
+    def initialize(engine, config)
       @engine = engine
       @pages = []
+      @config = config
+    end
+
+    def dir
+      @config.dir
     end
 
     def create_context(page)
       engine.create_context( site, page )
+    end
+
+    def load_page(path)
+      engine.load_path( self, path )
     end
 
 

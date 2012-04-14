@@ -10,6 +10,10 @@ module Awestruct
         super( site, delegate )
       end
 
+      def output_filename
+        File.basename( relative_source_path, '.md' ) + '.html'
+      end
+
       def rendered_content(context)
         doc = RDiscount.new( raw_page_content )
         doc.to_html

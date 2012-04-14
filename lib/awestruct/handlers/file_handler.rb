@@ -11,6 +11,12 @@ module Awestruct
         @path = path
       end
 
+      def relative_source_path
+        p = path.relative_path_from( site.dir ) 
+        return nil if !! ( %r(^\.\.) =~ p )
+        File.join( '', p )
+      end
+
       def stale?
         return true if ( @content.nil? || ( File.mtime( @path ) > @mtime ) )
         false

@@ -1,7 +1,7 @@
 require 'awestruct/handler_chain'
 require 'awestruct/handlers/file_handler'
 require 'awestruct/handlers/interpolation_handler'
-#require 'awestruct/handlers/markdown_handler'
+require 'awestruct/handlers/markdown_handler'
 require 'awestruct/handlers/haml_handler'
 
 module Awestruct
@@ -10,11 +10,11 @@ module Awestruct
 
 
     DEFAULTS = [
-      #HandlerChain.new( /\.md$/, 
-        #Awestruct::Handlers::FileHandler,
-        #Awestruct::Handlers::InterpolationHandler,
-        #Awestruct::Handlers::MarkdownHandler
-      #),
+      HandlerChain.new( /\.md$/, 
+        Awestruct::Handlers::FileHandler,
+        Awestruct::Handlers::InterpolationHandler,
+        Awestruct::Handlers::MarkdownHandler
+      ),
       HandlerChain.new( /\.haml$/, 
         Awestruct::Handlers::FileHandler,
         Awestruct::Handlers::HamlHandler
@@ -27,7 +27,7 @@ module Awestruct
     end
 
     def[](path)
-      @chains.detect{|e| e.matches?( path ) }
+      @chains.detect{|e| e.matches?( path.to_s ) }
     end
 
     def <<(chain)
