@@ -9,8 +9,8 @@ module Awestruct
     attr_reader :output_dir
     attr_reader :tmp_dir
 
-    attr_reader :layouts
     attr_reader :pages
+    attr_reader :layouts
 
     attr_reader :engine
 
@@ -22,6 +22,7 @@ module Awestruct
     def create_context(page)
       engine.create_context( site, page )
     end
+
 
   end
 

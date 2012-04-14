@@ -6,9 +6,9 @@ module Awestruct
     attr_reader :matcher
     attr_reader :handler_classes
 
-    def initialize(matcher)
+    def initialize(matcher, *handler_classes)
       @matcher         = matcher
-      @handler_classes = []
+      @handler_classes = handler_classes
     end
 
     def matches?(path)
