@@ -4,12 +4,10 @@ module Awestruct
   class PageLoader
 
     attr_reader :site
-    attr_reader :config
     attr_reader :root_dir
 
-    def initialize(site, config, target)
+    def initialize(site, target)
       @site   = site 
-      @config = config
       @target = target
 
       @root_dir = site.config.dir
@@ -19,7 +17,7 @@ module Awestruct
     end
 
     def ignore?(path)
-      config.ignore.include?( path ) 
+      site.config.ignore.include?( path ) 
     end
 
     def load_all
@@ -48,6 +46,7 @@ module Awestruct
     end
 
     def load_page(path)
+      puts "load page #{path}"
       pathname = case( path )
         when Pathname:
           pathname = path
@@ -57,7 +56,9 @@ module Awestruct
       chain = site.engine.pipeline.handler_chains[ path ]
       return nil if chain.nil?
       handler = chain.create(site, Pathname.new(path))
-      Page.new( site, handler )
+      p = Page.new( site, handler )
+      puts "loaded page #{p.class.inspect}"
+      p 
     end
 
   end

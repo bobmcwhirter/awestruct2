@@ -27,7 +27,8 @@ module Awestruct
       end
 
       def output_filename
-        File.basename( relative_source_path )
+        return @delegate.output_filename if @delegate
+        nil
       end
 
       def output_path

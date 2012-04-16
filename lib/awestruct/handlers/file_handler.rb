@@ -8,7 +8,12 @@ module Awestruct
 
       def initialize(site, path)
         super( site )
-        @path = path
+        case ( path )
+          when Pathname
+            @path = path
+          else
+            @path = Pathname.new( path.to_s )
+        end
       end
 
       def relative_source_path

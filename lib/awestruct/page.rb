@@ -1,5 +1,6 @@
 
 require 'hashery/open_cascade'
+require 'ostruct'
 
 module Awestruct
 
@@ -16,8 +17,16 @@ module Awestruct
       @dependencies  = []
     end
 
+    def [](arg)
+      puts "ask for #{arg} in #{handler.front_matter.inspect}"
+      if ( handler.front_matter.keys.include?( arg ) )
+        return handler.front_matter[ arg ]
+      end
+      super(arg)
+    end
+
     def create_context(content='')
-      context = OpenCascade.new( :site=>site, :page=>self, :content=>content )
+      context = OpenStruct.new( :site=>site, :page=>self, :content=>content )
       context
     end
 
@@ -51,7 +60,10 @@ module Awestruct
     end
 
     def rendered_content(context=nil)
-      ( context = site.create_context( self ) ) unless context
+      if ( context.nil? )
+        puts "Creating context"
+        context = create_context
+      end
       handler.rendered_content( context )
     end
 

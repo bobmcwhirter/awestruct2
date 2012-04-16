@@ -1,5 +1,6 @@
 
 require 'hashery/open_cascade'
+require 'awestruct/layouts'
 
 module Awestruct
 
@@ -18,8 +19,9 @@ module Awestruct
     def initialize(engine, config)
       @engine = engine
       @pages = []
-      @layouts = []
+      @layouts = Layouts.new
       @config = config
+      self.encoding = false
     end
 
     def dir

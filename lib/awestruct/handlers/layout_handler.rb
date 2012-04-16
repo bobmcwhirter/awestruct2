@@ -12,14 +12,20 @@ module Awestruct
       end
 
       def rendered_content(context)
-        layout_name = context.layout
         content = delegate.rendered_content( context )
-        if ( ! layout_name.nil? )
-          layout_page = context.site.layouts[ layout_name ]
-          layout_context = layout_page.new_context( context )
-          layout_context.content = content
-          content = layout.rendered_content( layout_context ) 
+        puts "A: #{content}"
+
+        if ( context.page.layout? )
+          current_layout = site.layouts[ context.page.layout ]
+          while ( ! current_layout.nil? )
+            context.content = content
+            content = current_layout.render( context )
+            puts "B: #{content}"
+            puts "cl.l #{current_layout.layout}"
+            current_layout =  site.layouts[ current_layout.layout ]
+          end
         end
+
         content
       end
 

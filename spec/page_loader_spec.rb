@@ -10,7 +10,7 @@ describe Awestruct::PageLoader do
     @engine = Awestruct::Engine.new
     @engine.pipeline.handler_chains << :defaults
     @site   = Awestruct::Site.new( @engine, @config )
-    @loader = Awestruct::PageLoader.new( @site, @config, :pages )
+    @loader = Awestruct::PageLoader.new( @site, :pages )
   end
 
   it "should be able to load a site page" do

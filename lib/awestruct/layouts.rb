@@ -6,9 +6,9 @@ module Awestruct
     def [](arg)
       case ( arg )
         when Fixnum
-          super( arg )
+          return super( arg )
         else
-          find_by_simple_name( arg )
+          return find_by_simple_name( arg )
       end
     end
 

@@ -13,7 +13,7 @@ module Awestruct
         @content
       end
 
-      def redered_content(context)
+      def rendered_content(context)
         raw_content
       end
 
