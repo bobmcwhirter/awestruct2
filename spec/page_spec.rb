@@ -46,5 +46,12 @@ describe Awestruct::Handlers::FileHandler do
     @page.should be_stale
   end
 
+  it "should be able to create an appropriate context" do
+    context = @page.create_context
+    context.site.should == @site
+    context.page.should == @page
+    context.content.should == ''
+  end
+
 end
 

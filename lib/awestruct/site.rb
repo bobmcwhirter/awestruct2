@@ -26,10 +26,6 @@ module Awestruct
       @config.dir
     end
 
-    def create_context(page)
-      engine.create_context( site, page )
-    end
-
     def load_page(path)
       engine.load_path( self, path )
     end

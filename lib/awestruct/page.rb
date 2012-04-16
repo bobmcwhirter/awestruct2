@@ -16,6 +16,11 @@ module Awestruct
       @dependencies  = []
     end
 
+    def create_context(content='')
+      context = OpenCascade.new( :site=>site, :page=>self, :content=>content )
+      context
+    end
+
     def relative_source_path
       handler.relative_source_path
     end

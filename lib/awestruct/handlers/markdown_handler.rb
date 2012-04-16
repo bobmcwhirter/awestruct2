@@ -19,7 +19,7 @@ module Awestruct
       end
 
       def rendered_content(context)
-        doc = RDiscount.new( raw_page_content )
+        doc = RDiscount.new( raw_content )
         doc.to_html
       end
 
