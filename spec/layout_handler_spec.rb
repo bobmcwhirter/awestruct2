@@ -31,6 +31,8 @@ describe Awestruct::Handlers::LayoutHandler do
     layout.should_not be_nil
 
     @site.layouts << layout
+
+    puts @site.layouts.inspect
   end
 
   it "should be able to find layouts by simple name" do
@@ -57,12 +59,9 @@ describe Awestruct::Handlers::LayoutHandler do
     layout_handler = Awestruct::Handlers::LayoutHandler.new( @site, primary_handler )
 
     page = Awestruct::Page.new( @site, layout_handler )
+    page.layout = 'haml-layout-two'
 
     context = page.create_context
-    puts "context #{context.class}"
-    puts "context.page #{context.page.class}"
-    puts "context.page.layout #{context.page.layout}"
-    context.page.layout = 'haml-layout-two'
 
     @site.layouts['haml-layout'].should_not be_nil
     rendered = layout_handler.rendered_content( context )
