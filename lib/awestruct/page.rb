@@ -20,6 +20,10 @@ module Awestruct
       handler.relative_source_path
     end
 
+    def simple_name
+      handler.simple_name
+    end
+
     def output_path
       @output_path || handler.output_path
     end

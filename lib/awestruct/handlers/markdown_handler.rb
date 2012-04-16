@@ -10,6 +10,10 @@ module Awestruct
         super( site, delegate )
       end
 
+      def simple_name
+        File.basename( relative_source_path, '.md' ) 
+      end
+
       def output_filename
         File.basename( relative_source_path, '.md' ) + '.html'
       end

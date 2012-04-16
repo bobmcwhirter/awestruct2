@@ -17,6 +17,10 @@ module Awestruct
         false
       end
 
+      def simple_name
+        @delegate.simple_name
+      end
+
       def relative_source_path 
         return @delegate.relative_source_path if @delegate
         nil

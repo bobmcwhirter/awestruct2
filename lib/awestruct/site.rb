@@ -18,6 +18,7 @@ module Awestruct
     def initialize(engine, config)
       @engine = engine
       @pages = []
+      @layouts = []
       @config = config
     end
 

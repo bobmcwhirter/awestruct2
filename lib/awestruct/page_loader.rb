@@ -5,17 +5,28 @@ module Awestruct
 
     attr_reader :site
     attr_reader :config
+    attr_reader :root_dir
 
-    def initialize(site, config)
+    def initialize(site, config, target)
       @site   = site 
       @config = config
+      @target = target
+
+      @root_dir = site.config.dir
+      if ( @target == :layouts )
+        @root_dir = Pathname.new( File.join( root_dir, '_layouts/' ) )
+      end
+    end
+
+    def ignore?(path)
+      config.ignore.include?( path ) 
     end
 
     def load_all
-      puts "loading all from #{site.config.dir}"
-      site.config.dir.find do |path|
-        puts "path #{path}"
-        next if path == site.dir
+      root_dir.find do |path|
+        if ( path == root_dir )
+          next
+        end
         basename = File.basename( path )
         if ( basename == '.htaccess' )
           #special case
@@ -23,15 +34,15 @@ module Awestruct
           Find.prune
           next
         end
-        relative_path = path.relative_path_from( site.dir ).to_s
-        if config.ignore.include?(relative_path)
+        relative_path = path.relative_path_from( root_dir ).to_s
+        if ignore?(relative_path)
           Find.prune
           next
         end
         page = load_page( path )
         if ( page )
           #inherit_front_matter( page )
-          site.pages << page
+          site.send( @target ) << page
         end
       end
     end

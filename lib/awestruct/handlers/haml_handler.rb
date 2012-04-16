@@ -11,6 +11,10 @@ module Awestruct
         super( site, delegate )
       end
 
+      def simple_name
+        File.basename( relative_source_path, '.html.haml' )
+      end
+
       def output_filename
         File.basename( relative_source_path, '.haml' )
       end
