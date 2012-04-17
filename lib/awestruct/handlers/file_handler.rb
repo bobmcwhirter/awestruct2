@@ -21,9 +21,13 @@ module Awestruct
       end
 
       def relative_source_path
-        p = path.relative_path_from( site.dir ) 
-        return nil if !! ( %r(^\.\.) =~ p )
-        File.join( '', p )
+        begin
+          p = path.relative_path_from( site.dir ) 
+          return nil if !! ( %r(^\.\.) =~ p )
+          File.join( '', p )
+        rescue
+          nil
+        end
       end
 
       def stale?

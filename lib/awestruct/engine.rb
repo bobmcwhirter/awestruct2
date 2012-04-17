@@ -4,6 +4,8 @@ require 'awestruct/pipeline'
 require 'awestruct/page'
 require 'awestruct/page_loader'
 
+require 'awestruct/util/inflector'
+
 require 'awestruct/extensions/pipeline'
 
 require 'fileutils'
@@ -20,6 +22,7 @@ module Awestruct
       @pipeline = Pipeline.new
       @site_page_loader = PageLoader.new( @site )
       @layout_page_loader = PageLoader.new( @site, :layouts )
+      adjust_load_path
     end
 
     def run(profile, base_url, default_base_url, force=false)
@@ -27,7 +30,29 @@ module Awestruct
       load_pages
       execute_pipeline
       configure_compass
+      set_urls( site.pages )
       generate_output
+    end
+
+    def adjust_load_path
+      ext_dir = File.join( site.config.extension_dir )
+      if ( $LOAD_PATH.index( ext_dir ).nil? )
+        $LOAD_PATH << ext_dir
+      end
+    end
+
+    def set_urls(pages)
+      pages.each do |page|
+        page_path = page.output_path
+        if ( page_path =~ /^\// )
+          page.url = page_path
+        else
+          page.url = "/#{page_path}"
+        end
+        if ( page.url =~ /^(.*\/)index.html$/ )
+          page.url = $1
+        end
+      end
     end
 
     def load_pipeline
@@ -35,7 +60,6 @@ module Awestruct
       pipeline_file = File.join( ext_dir, 'pipeline.rb' )
       if ( File.exists?( pipeline_file ) )
         p = eval(File.read( pipeline_file ), nil, pipeline_file, 1)
-        puts "p=#{p.inspect}"
         p.extensions.each do |e|
           pipeline.extension( e )
         end
@@ -69,12 +93,10 @@ module Awestruct
     def load_pages
       @site_page_loader.load_all
       @layout_page_loader.load_all
-      puts "pages #{@site.pages.inspect}"
     end
 
     def generate_output
       @site.pages.each do |page|
-        puts "output_path #{page.output_path}"
         generated_path = File.join( site.config.output_dir, page.output_path )
         FileUtils.mkdir_p( File.dirname( generated_path ) )
         File.open( generated_path, 'w' ) do |file|

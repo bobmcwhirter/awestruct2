@@ -20,7 +20,7 @@ module Awestruct
               day   = $3
               slug  = $4
               page.date = Time.utc( year.to_i, month.to_i, day.to_i )
-            elsif (page.date)
+            elsif (page.date?)
               page.relative_source_path =~ /^#{@path_prefix}\/(.*)\..*$/
               date = page.date;
               if date.kind_of? String
