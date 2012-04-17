@@ -6,7 +6,7 @@ module Awestruct
     attr_reader :site
     attr_reader :root_dir
 
-    def initialize(site, target=:site)
+    def initialize(site, target=:pages)
       @site   = site 
       @target = target
 
@@ -37,10 +37,12 @@ module Awestruct
           Find.prune
           next
         end
-        page = load_page( path )
-        if ( page )
-          #inherit_front_matter( page )
-          site.send( @target ) << page
+        unless path.directory?
+          page = load_page( path )
+          if ( page )
+            #inherit_front_matter( page )
+            site.send( @target ) << page
+          end
         end
       end
     end

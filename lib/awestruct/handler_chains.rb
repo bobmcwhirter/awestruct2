@@ -30,6 +30,7 @@ module Awestruct
 
     def initialize()
       @chains = []
+      self << :defaults
     end
 
     def[](path)

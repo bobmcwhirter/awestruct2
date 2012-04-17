@@ -2,6 +2,7 @@
 
 $: << File.dirname(__FILE__) + '/../lib'
 
+require 'rubygems'
 require 'awestruct/cli/invoker'
 
 Awestruct::CLI::Invoker.new( ARGV ).invoke!

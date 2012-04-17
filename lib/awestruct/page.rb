@@ -62,10 +62,7 @@ module Awestruct
       handler.raw_content
     end
 
-    def rendered_content(context=nil)
-      if ( context.nil? )
-        context = create_context
-      end
+    def rendered_content(context=create_context())
       handler.rendered_content( context )
     end
 

@@ -3,6 +3,8 @@ require 'awestruct/cli/options'
 require 'awestruct/cli/server'
 require 'awestruct/cli/generate'
 
+require 'pathname'
+
 module Awestruct
   module CLI
     class Invoker

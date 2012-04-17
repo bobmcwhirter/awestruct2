@@ -16,6 +16,10 @@ module Awestruct
         end
       end
 
+      def output_filename
+        File.basename( @path )
+      end
+
       def relative_source_path
         p = path.relative_path_from( site.dir ) 
         return nil if !! ( %r(^\.\.) =~ p )
