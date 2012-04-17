@@ -1,6 +1,8 @@
 require 'awestruct/config'
+require 'awestruct/site'
 require 'awestruct/pipeline'
 require 'awestruct/page'
+require 'awestruct/page_loader'
 
 module Awestruct
 
@@ -15,9 +17,9 @@ module Awestruct
       @layout_page_loader = PageLoader.new( @site, :layouts )
     end
 
-    def run(watch=false)
+    def run(profile, base_url, default_base_url, force=false)
       load_pages
-      generate_output
+      #generate_output
     end
 
     private
