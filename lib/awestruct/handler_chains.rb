@@ -4,6 +4,8 @@ require 'awestruct/handlers/front_matter_handler'
 require 'awestruct/handlers/interpolation_handler'
 require 'awestruct/handlers/markdown_handler'
 require 'awestruct/handlers/haml_handler'
+require 'awestruct/handlers/sass_handler'
+require 'awestruct/handlers/scss_handler'
 require 'awestruct/handlers/layout_handler'
 
 module Awestruct
@@ -24,6 +26,14 @@ module Awestruct
         Awestruct::Handlers::FrontMatterHandler,
         Awestruct::Handlers::HamlHandler,
         Awestruct::Handlers::LayoutHandler
+      ),
+      HandlerChain.new( /\.sass$/,
+        Awestruct::Handlers::FileHandler,
+        Awestruct::Handlers::SassHandler
+      ),
+      HandlerChain.new( /\.scss$/,
+        Awestruct::Handlers::FileHandler,
+        Awestruct::Handlers::ScssHandler
       ),
       HandlerChain.new( /.*/, Awestruct::Handlers::FileHandler )
     ]

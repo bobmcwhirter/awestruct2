@@ -35,6 +35,11 @@ module Awestruct
         File.join( File.dirname( relative_source_path ), output_filename )
       end
 
+      def path
+        return @delegate.path if @delegate
+        nil
+      end
+
       def front_matter
         return @delegate.front_matter if @delegate
         {}

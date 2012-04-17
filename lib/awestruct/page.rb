@@ -54,6 +54,10 @@ module Awestruct
       end
     end
 
+    def source_path
+      handler.path
+    end
+
     def stale?
       handler.stale? || @dependencies.any?(&:stale?) 
     end
@@ -65,6 +69,11 @@ module Awestruct
     def rendered_content(context=create_context())
       handler.rendered_content( context )
     end
+
+    def content
+      rendered_content
+    end
+
 
   end
 
