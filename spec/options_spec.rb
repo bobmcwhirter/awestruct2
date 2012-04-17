@@ -26,7 +26,7 @@ describe Awestruct::CLI::Options do
 
   describe "parsing" do 
     def parse!(*args)
-      Awestruct::CLI::Options.new.parse! args
+      Awestruct::CLI::Options.parse! args
     end
 
     it "should parse server-related args" do
