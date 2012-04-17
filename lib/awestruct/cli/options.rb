@@ -1,3 +1,6 @@
+require 'optparse'
+
+require 'awestruct/version'
 
 module Awestruct
   module CLI

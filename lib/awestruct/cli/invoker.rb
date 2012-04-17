@@ -7,6 +7,7 @@ module Awestruct
       attr_reader :options
 
       def initialize(*options)
+        options = options.flatten
         if ( ( ! options.empty? ) && ( options.first === Awestruct::CLI::Options ) )
           @options = options.first
         else
