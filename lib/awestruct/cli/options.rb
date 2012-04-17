@@ -33,7 +33,7 @@ module Awestruct
         @script    = nil
       end
 
-      def parse(args)
+      def parse!(args)
         opts = OptionParser.new do |opts|
           opts.on( '-i', '--init', 'Initialize a new project in the current directory' ) do |init|
             self.init     = init
@@ -101,6 +101,7 @@ module Awestruct
         end
 
         opts.parse!(args)
+        self
       end # parse()
 
     end
