@@ -18,18 +18,13 @@ module Awestruct
     end
 
     def [](arg)
-      puts "ask for #{arg.inspect} in #{handler.front_matter.inspect} #{handler.front_matter.keys.inspect}"
       if ( handler.front_matter.keys.include?( arg ) )
-        puts "fetching from front matter"
         r = handler.front_matter[ arg ]
       elsif ( handler.front_matter.keys.include?( arg.to_s ) )
-        puts "fetching from front matter"
         r = handler.front_matter[ arg.to_s ]
       else
-        puts "fetching from internal page hash"
         r = super(arg)
       end
-      puts "result --> #{r}"
       r
     end
 
@@ -69,12 +64,9 @@ module Awestruct
 
     def rendered_content(context=nil)
       if ( context.nil? )
-        puts "Creating context"
         context = create_context
       end
-      c = handler.rendered_content( context )
-      puts "** page rendered to #{c}"
-      c
+      handler.rendered_content( context )
     end
 
   end

@@ -14,7 +14,6 @@ module Awestruct
 
     def find_by_simple_name(arg)
       self.find{|e| 
-        puts "test #{arg} vs #{e.simple_name}"
         e.simple_name == arg
       }
     end

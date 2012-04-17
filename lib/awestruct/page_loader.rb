@@ -46,7 +46,6 @@ module Awestruct
     end
 
     def load_page(path)
-      puts "load page #{path}"
       pathname = case( path )
         when Pathname:
           pathname = path
@@ -56,9 +55,7 @@ module Awestruct
       chain = site.engine.pipeline.handler_chains[ path ]
       return nil if chain.nil?
       handler = chain.create(site, Pathname.new(path))
-      p = Page.new( site, handler )
-      puts "loaded page #{p.class.inspect}"
-      p 
+      Page.new( site, handler )
     end
 
   end

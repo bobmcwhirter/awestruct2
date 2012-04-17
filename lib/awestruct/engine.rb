@@ -1,3 +1,4 @@
+require 'awestruct/config'
 require 'awestruct/pipeline'
 require 'awestruct/page'
 
@@ -7,7 +8,7 @@ module Awestruct
 
     attr_reader :pipeline
 
-    def initialize(config=Config.new)
+    def initialize(config=Awestruct::Config.new)
       @site = Site.new( self, config)
       @pipeline = Pipeline.new
       @site_page_loader = PageLoader.new( @site )

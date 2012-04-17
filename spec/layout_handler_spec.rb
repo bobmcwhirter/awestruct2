@@ -19,7 +19,6 @@ describe Awestruct::Handlers::LayoutHandler do
     @engine.pipeline.handler_chains << :defaults
     @site = Awestruct::Site.new( @engine, @config )
     layout_loader = Awestruct::PageLoader.new( @site, :layouts )
-    puts @config.dir
     layout = layout_loader.load_page( File.join( @config.dir, 'haml-layout.html.haml' ) )
     layout.class.should == Awestruct::Page
     layout.should_not be_nil
@@ -31,8 +30,6 @@ describe Awestruct::Handlers::LayoutHandler do
     layout.should_not be_nil
 
     @site.layouts << layout
-
-    puts @site.layouts.inspect
   end
 
   it "should be able to find layouts by simple name" do
@@ -66,9 +63,16 @@ describe Awestruct::Handlers::LayoutHandler do
     @site.layouts['haml-layout'].should_not be_nil
     rendered = layout_handler.rendered_content( context )
 
-    puts "---"
-    puts rendered
-    puts "---"
+    haml_index = ( rendered =~ %r(This is a haml layout) )
+    awestruct_index = ( rendered =~ %r(Welcome to Awestruct) )
+    content_index = ( rendered =~ %r(this is the content) )
+
+    haml_index.should > 0
+    awestruct_index.should > 0
+    content_index.should > 0 
+
+    haml_index.should < awestruct_index
+    awestruct_index.should < content_index
   end
 
 end
