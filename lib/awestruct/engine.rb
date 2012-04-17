@@ -68,6 +68,16 @@ module Awestruct
       end
     end
 
+    ####
+    ##
+    ## compat with awestruct 0.2.x
+    ##
+    ####
+
+    def load_page(path)
+      @site_page_loader.load_page( path )
+    end
+
   end
 
 end
