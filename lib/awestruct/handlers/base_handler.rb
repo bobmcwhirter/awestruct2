@@ -50,6 +50,12 @@ module Awestruct
         nil
       end
 
+      def to_chain
+        chain = [ self ]
+        chain += @delegate.to_chain if @delegate
+        chain.flatten
+      end
+
     end
   end
 end

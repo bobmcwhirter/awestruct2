@@ -13,8 +13,8 @@ module Awestruct
     attr_accessor :tmp_dir
     attr_accessor :ignore
 
-    def initialize(dir)
-      @dir            = Pathname.new( dir) 
+    def initialize(dir = Dir.pwd)
+      @dir            = Pathname.new( dir ) 
       @layouts_dir    = Pathname.new( File.join(dir, '_layouts') )
       @config_dir     = Pathname.new( File.join(dir, '_config') )
       @input_dir      = Pathname.new( File.join(dir, '') )

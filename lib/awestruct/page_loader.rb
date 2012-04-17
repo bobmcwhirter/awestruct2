@@ -6,7 +6,7 @@ module Awestruct
     attr_reader :site
     attr_reader :root_dir
 
-    def initialize(site, target)
+    def initialize(site, target=:site)
       @site   = site 
       @target = target
 
