@@ -38,9 +38,9 @@ module Awestruct
       HandlerChain.new( /.*/, Awestruct::Handlers::FileHandler )
     ]
 
-    def initialize()
+    def initialize(include_defaults=true)
       @chains = []
-      self << :defaults
+      self << :defaults if include_defaults
     end
 
     def[](path)

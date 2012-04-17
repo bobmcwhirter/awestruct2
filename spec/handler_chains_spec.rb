@@ -6,7 +6,7 @@ describe Awestruct::HandlerChains do
 
   it "should perform matching in-order" do
 
-    chains = Awestruct::HandlerChains.new
+    chains = Awestruct::HandlerChains.new(false)
 
     chain1 = Awestruct::HandlerChain.new( /foot/ )
     chain2 = Awestruct::HandlerChain.new( /foo/ )
