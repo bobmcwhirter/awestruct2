@@ -28,7 +28,6 @@ module Awestruct
         sass_opts = Compass.sass_engine_options
         sass_opts[:load_paths] ||= []
         Compass::Frameworks::ALL.each do |framework|
-          puts "framework #{framework.stylesheets_directory}"
           sass_opts[:load_paths] << framework.stylesheets_directory
         end
         sass_opts[:load_paths] << File.dirname( context.page.source_path )

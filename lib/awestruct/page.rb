@@ -28,6 +28,10 @@ module Awestruct
       r
     end
 
+    def key?(name)
+      handler.front_matter.key?(name) || handler.front_matter.key?( name.to_s ) || super(name)
+    end
+
     def create_context(content='')
       context = OpenStruct.new( :site=>site, :page=>self, :content=>content )
       context
