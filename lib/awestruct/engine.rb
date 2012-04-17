@@ -10,6 +10,22 @@ require 'awestruct/extensions/pipeline'
 
 require 'fileutils'
 
+require 'hashery/open_cascade'
+
+class OpenCascade
+
+  def transform_entry(entry)
+    case entry
+    when Hash
+      OpenCascade.new(entry) 
+    when Array
+      entry.map!{ |e| transform_entry(e) }
+    else
+      entry
+    end
+  end
+end
+
 module Awestruct
 
   class Engine
@@ -113,6 +129,17 @@ module Awestruct
 
     def load_page(path)
       @site_page_loader.load_page( path )
+    end
+
+    def find_and_load_site_page(simple_path)
+      path_glob = File.join( site.config.input_dir, simple_path + '.*' )
+      candidates = Dir[ path_glob ]
+      return nil if candidates.empty?
+      throw Exception.new( "too many choices for #{simple_path}" ) if candidates.size != 1
+      dir_pathname = Pathname.new( site.config.dir )
+      path_name = Pathname.new( candidates[0] )
+      relative_path = path_name.relative_path_from( dir_pathname ).to_s
+      load_page( candidates[0] )
     end
 
   end
