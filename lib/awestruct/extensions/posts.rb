@@ -36,10 +36,11 @@ module Awestruct
             # if a date was found create a post
             if( year and month and day)
               page.slug = slug
-              context = OpenStruct.new({
-                :site=>site,
-                :page=>page,
-              })
+              #context = OpenStruct.new({
+                #:site=>site,
+                #:page=>page,
+              #})
+              context = page.create_context
               #page.body = page.render( context )
               page.output_path = "#{@path_prefix}/#{year}/#{month}/#{day}/#{slug}.html"
               #page.layout = 'post'

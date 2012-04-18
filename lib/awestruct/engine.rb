@@ -10,21 +10,9 @@ require 'awestruct/extensions/pipeline'
 
 require 'fileutils'
 
-require 'hashery/open_cascade'
-
-class OpenCascade
-
-  def transform_entry(entry)
-    case entry
-    when OpenCascade
-      entry
-    when Hash
-      OpenCascade.new(entry) 
-    when Array
-      entry.map!{ |e| transform_entry(e) }
-    else
-      entry
-    end
+class OpenStruct
+  def inspect
+    "OpenStruct{...}"
   end
 end
 
@@ -44,12 +32,66 @@ module Awestruct
     end
 
     def run(profile, base_url, default_base_url, force=false)
+      load_site_yaml(profile)
+      load_yamls
       load_pipeline
       load_pages
       execute_pipeline
       configure_compass
       set_urls( site.pages )
       generate_output
+    end
+
+    def load_site_yaml(profile)
+      site_yaml = File.join( site.config.config_dir, 'site.yml' )
+      if ( File.exist?( site_yaml ) )
+        data = YAML.load( File.read( site_yaml ) )
+        site.interpolate = true
+        profile_data = {}
+        data.each do |k,v|
+          if ( ( k == 'profiles' ) && ( ! profile.nil? ) )
+            profile_data = ( v[profile] || {} )
+          else
+            site.send( "#{k}=", v )
+          end
+        end if data
+        site.profile = profile
+
+        profile_data.each do |k,v|
+          site.send( "#{k}=", v )
+        end
+      end
+    end
+
+    def load_yamls
+      Dir[ File.join( site.config.config_dir, '*.yml' ) ].each do |yaml_path|
+        load_yaml( yaml_path ) unless ( File.basename( yaml_path ) == 'site.yml' )
+      end
+    end
+
+    def load_yaml(yaml_path)
+      data = YAML.load( File.read( yaml_path ) )
+      name = File.basename( yaml_path, '.yml' )
+      site.send( "#{name}=", massage_yaml( data ) )
+    end
+
+    def massage_yaml(obj)
+      result = obj
+      case ( obj )
+        when Hash
+          result = {}
+          obj.each do |k,v|
+            result[k] = massage_yaml(v)
+          end
+          #result = AStruct.new(result.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo })
+          result = AStruct.new( result )
+        when Array
+          result = []
+          obj.each do |v|
+            result << massage_yaml(v)
+          end
+      end
+      result
     end
 
     def adjust_load_path
@@ -81,8 +123,8 @@ module Awestruct
         p.extensions.each do |e|
           pipeline.extension( e )
         end
-        p.helpers.each do |e|
-          pipeline.helper( e )
+        p.helpers.each do |h|
+          pipeline.helper( h )
         end
         p.transformers.each do |e|
           pipeline.transformers( e )

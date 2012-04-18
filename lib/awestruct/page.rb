@@ -1,10 +1,13 @@
 
+require 'awestruct/context'
+
 require 'hashery/open_cascade'
 require 'ostruct'
+require 'awestruct/astruct'
 
 module Awestruct
 
-  class Page < OpenCascade
+  class Page < Awestruct::AStruct
 
     attr_accessor :site
     attr_accessor :handler
@@ -29,11 +32,12 @@ module Awestruct
     end
 
     def key?(name)
-      handler.front_matter.key?(name) || handler.front_matter.key?( name.to_s ) || super(name)
+      super(name) || handler.front_matter.key?(name) || handler.front_matter.key?( name.to_s ) 
     end
 
     def create_context(content='')
-      context = OpenStruct.new( :site=>site, :page=>self, :content=>content )
+      context = Awestruct::Context.new( :site=>site, :page=>self, :content=>content )
+      site.engine.pipeline.mixin_helpers( context )
       context
     end
 
@@ -46,7 +50,7 @@ module Awestruct
     end
 
     def output_path
-      @output_path || handler.output_path
+      (@output_path || handler.output_path).to_s
     end
 
     def output_path=(path)

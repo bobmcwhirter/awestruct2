@@ -62,7 +62,6 @@ module Awestruct
           page = site.engine.find_and_load_site_page( @input_path )
           removal_path ||= page.output_path
           slice.extend( Paginated )
-          puts "#{@prop_name} slice  #{slice.object_id} #{slice.class} #{slice.respond_to?( 'current_page='.to_sym )}"
           page.send( "#{@prop_name}=", slice )
           if ( i == 1 )
             page.output_path = File.join( @output_prefix, File.basename( @input_path ) + ".html" )
@@ -84,7 +83,6 @@ module Awestruct
         prev_page = nil
         paginated_pages.each_with_index do |page,i|
           slice = page.send( @prop_name )
-          puts "#{@prop_name} slice2 #{slice.object_id} #{slice.class} #{slice.respond_to?( "current_page=".to_sym )}"
           
           slice.current_page       = page
           slice.current_page_index = i

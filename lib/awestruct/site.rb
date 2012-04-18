@@ -1,10 +1,11 @@
 
-require 'hashery/open_cascade'
+#require 'hashery/open_cascade'
 require 'awestruct/layouts'
+require 'awestruct/astruct'
 
 module Awestruct
 
-  class Site < OpenCascade
+  class Site < Awestruct::AStruct
 
     attr_reader :dir
     attr_reader :output_dir

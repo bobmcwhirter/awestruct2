@@ -20,23 +20,16 @@ module Awestruct
       end
 
       def rendered_content(context)
-        puts "-a"
         rendered = ''
         options = context.site.haml? ? context.site.haml : {}
-        puts "-b"
         options = options.inject({}){ |hash,(key,value)| 
           hash[key.to_sym] = value
           hash
         }
-        puts "-c"
         options[:relative_source_path] = context.page.relative_source_path
         options[:site] = context.site
-        puts "-d"
         haml_engine = Haml::Engine.new( delegate.raw_content, options )
-        puts "-e"
-        c = haml_engine.render( context )
-        puts "-f"
-        c
+        haml_engine.render( context )
       end
 
     end

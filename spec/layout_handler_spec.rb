@@ -63,6 +63,10 @@ describe Awestruct::Handlers::LayoutHandler do
     @site.layouts['haml-layout'].should_not be_nil
     rendered = layout_handler.rendered_content( context )
 
+    puts "BEGIN rendered----"
+    puts rendered
+    puts "END rendered----"
+
     haml_index = ( rendered =~ %r(This is a haml layout) )
     awestruct_index = ( rendered =~ %r(Welcome to Awestruct) )
     content_index = ( rendered =~ %r(this is the content) )

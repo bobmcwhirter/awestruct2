@@ -23,8 +23,21 @@ module Awestruct
     end
 
     def execute(site)
+      execute_extensions(site)
+      mixin_helpers(site)
+    end
+
+    def execute_extensions(site)
       @extensions.each do |e|
         e.execute(site)
+      end
+    end
+
+    def mixin_helpers(context)
+      puts "mixing in helpers"
+      @helpers.each do |h|
+        puts " + #{h}"
+        context.extend(h)
       end
     end
 

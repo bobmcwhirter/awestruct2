@@ -48,7 +48,6 @@ module Awestruct
     end
 
     def load_page(path)
-      puts "load_page #{path}"
       pathname = case( path )
         when Pathname:
           pathname = path
