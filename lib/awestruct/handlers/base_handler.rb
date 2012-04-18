@@ -45,6 +45,11 @@ module Awestruct
         {}
       end
 
+      def content_syntax
+        return @delegate.raw_content if @delegate
+        :none
+      end
+
       def raw_content
         return @delegate.raw_content if @delegate
         nil

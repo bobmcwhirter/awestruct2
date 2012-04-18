@@ -16,6 +16,8 @@ class OpenCascade
 
   def transform_entry(entry)
     case entry
+    when OpenCascade
+      entry
     when Hash
       OpenCascade.new(entry) 
     when Array
@@ -114,6 +116,7 @@ module Awestruct
     def generate_output
       @site.pages.each do |page|
         generated_path = File.join( site.config.output_dir, page.output_path )
+        puts "generating #{generated_path}"
         FileUtils.mkdir_p( File.dirname( generated_path ) )
         File.open( generated_path, 'w' ) do |file|
           file << page.rendered_content
@@ -127,8 +130,13 @@ module Awestruct
     ##
     ####
 
-    def load_page(path)
-      @site_page_loader.load_page( path )
+    def load_page(path, options={})
+      page = @site_page_loader.load_page( path )
+      if ( options[:relative_path] )
+        fixed_relative_path = ( options[:relative_path].nil? ? nil : File.join( '', options[:relative_path] ) )
+        page.relative_path = fixed_relative_path
+      end
+      page
     end
 
     def find_and_load_site_page(simple_path)

@@ -28,6 +28,14 @@ module Awestruct
       @config.dir
     end
 
+    def output_dir
+      @config.output_dir
+    end
+
+    def tmp_dir
+      @config.tmp_dir
+    end
+
     def load_page(path)
       engine.load_path( self, path )
     end

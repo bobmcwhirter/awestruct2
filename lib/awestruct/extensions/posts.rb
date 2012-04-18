@@ -61,6 +61,7 @@ module Awestruct
         end
 
         site.send( "#{@assign_to}=", posts )
+
       end
 
     end

@@ -18,6 +18,10 @@ module Awestruct
         File.basename( relative_source_path, '.md' ) + '.html'
       end
 
+      def content_syntax
+        :markdown
+      end
+
       def rendered_content(context)
         doc = RDiscount.new( raw_content )
         doc.to_html

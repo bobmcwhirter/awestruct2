@@ -66,6 +66,10 @@ module Awestruct
       handler.stale? || @dependencies.any?(&:stale?) 
     end
 
+    def content_syntax
+      handler.content_syntax
+    end
+
     def raw_content
       handler.raw_content
     end
