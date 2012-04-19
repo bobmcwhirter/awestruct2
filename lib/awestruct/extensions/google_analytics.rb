@@ -3,6 +3,7 @@ module Awestruct
     module GoogleAnalytics
 
       def google_analytics()
+        puts "GA: #{self.inspect}"
         html = ''
         html += %Q(<script type="text/javascript">\n)
         html += %Q(var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");\n)

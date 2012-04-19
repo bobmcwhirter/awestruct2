@@ -16,7 +16,6 @@ describe Awestruct::Handlers::LayoutHandler do
   before :all do
     @config = OpenCascade.new( :dir=>Pathname.new( File.dirname(__FILE__) + '/test-data/handlers' ) )
     @engine = Awestruct::Engine.new
-    @engine.pipeline.handler_chains << :defaults
     @site = Awestruct::Site.new( @engine, @config )
     layout_loader = Awestruct::PageLoader.new( @site, :layouts )
     layout = layout_loader.load_page( File.join( @config.dir, 'haml-layout.html.haml' ) )
@@ -52,6 +51,7 @@ describe Awestruct::Handlers::LayoutHandler do
   end
 
   it "should recursively apply the layout to its delegate's content" do
+    puts "A"
     primary_handler = Awestruct::Handlers::StringHandler.new( @site, "this is the content" )
     layout_handler = Awestruct::Handlers::LayoutHandler.new( @site, primary_handler )
 

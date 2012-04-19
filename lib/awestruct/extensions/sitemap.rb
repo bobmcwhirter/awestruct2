@@ -17,7 +17,7 @@ module Awestruct
 
         # Generate sitemap pages for stuff in _config/sitemap.yml
         site.sitemap.pages.each do |entry|
-          page = Awestruct::Renderable.new( site )
+          page = Awestruct::Page.new( site )
           page.output_path = entry.url
           page.date = entry.date( nil )
           page.priority = entry.priority( nil )

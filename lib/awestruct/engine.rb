@@ -151,8 +151,8 @@ module Awestruct
     end
 
     def load_pages
-      @site_page_loader.load_all
-      @layout_page_loader.load_all
+      @layout_page_loader.load_all( :post )
+      @site_page_loader.load_all( :inline )
     end
 
     def generate_output
@@ -179,6 +179,10 @@ module Awestruct
         page.relative_path = fixed_relative_path
       end
       page
+    end
+
+    def load_site_page(relative_path)
+      load_page( File.join( site.config.dir, relative_path ) )
     end
 
     def find_and_load_site_page(simple_path)

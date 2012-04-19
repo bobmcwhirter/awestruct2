@@ -20,7 +20,8 @@ module Awestruct
       site.config.ignore.include?( path ) 
     end
 
-    def load_all
+    def load_all(prepare=:inline)
+      pages = []
       root_dir.find do |path|
         if ( path == root_dir )
           next
@@ -38,16 +39,17 @@ module Awestruct
           next
         end
         unless path.directory?
-          page = load_page( path )
+          page = load_page( path, prepare )
           if ( page )
             #inherit_front_matter( page )
             site.send( @target ) << page
           end
         end
       end
+      pages.each{|p| p.prepare!} if ( prepare == :post )
     end
 
-    def load_page(path)
+    def load_page(path,prepare=:inline)
       pathname = case( path )
         when Pathname:
           pathname = path
@@ -57,7 +59,9 @@ module Awestruct
       chain = site.engine.pipeline.handler_chains[ path ]
       return nil if chain.nil?
       handler = chain.create(site, Pathname.new(path))
-      Page.new( site, handler )
+      p = Page.new( site, handler )
+      p.prepare! if prepare == :inline
+      p
     end
 
   end

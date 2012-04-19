@@ -25,6 +25,10 @@ module Awestruct
       self.encoding = false
     end
 
+    def inspect
+      "Site{:dir=>#{dir}}"
+    end
+
     def dir
       @config.dir
     end

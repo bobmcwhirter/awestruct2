@@ -60,6 +60,16 @@ module Awestruct
         nil
       end
 
+      def content_line_offset
+        return @delegate.content_line_offset if @delegate
+        0
+      end
+
+      def inherit_front_matter(page)
+        puts "inherit front-matter from #{self.class} to #{page.inspect}"
+        @delegate.inherit_front_matter(page) if @delegate
+      end
+
       def to_chain
         chain = [ self ]
         chain += @delegate.to_chain if @delegate
