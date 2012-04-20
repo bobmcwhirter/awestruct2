@@ -1,7 +1,8 @@
 require 'awestruct/cli/options'
 
-require 'awestruct/cli/server'
 require 'awestruct/cli/generate'
+require 'awestruct/cli/auto'
+require 'awestruct/cli/server'
 
 require 'pathname'
 
@@ -83,6 +84,7 @@ module Awestruct
       end
 
       def invoke_auto()
+        Awestruct::CLI::Auto.new.run
       end
 
       def invoke_server()

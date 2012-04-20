@@ -1,0 +1,4 @@
+
+guard :awestruct do
+  watch %r(.*)
+end
