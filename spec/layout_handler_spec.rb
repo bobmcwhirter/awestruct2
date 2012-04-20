@@ -32,7 +32,7 @@ describe Awestruct::Handlers::LayoutHandler do
   end
 
   it "should be able to find layouts by simple name" do
-    layout = @site.layouts[ 'haml-layout' ]
+    layout = @site.layouts.find_matching( 'haml-layout', '.html' )
     layout.class.should == Awestruct::Page
   end
 
@@ -45,13 +45,12 @@ describe Awestruct::Handlers::LayoutHandler do
     context = page.create_context
     context.page.layout = 'haml-layout'
 
-    @site.layouts['haml-layout'].should_not be_nil
+    @site.layouts.find_matching( 'haml-layout', '.html' ).should_not be_nil
     rendered = layout_handler.rendered_content( context )
     
   end
 
   it "should recursively apply the layout to its delegate's content" do
-    puts "A"
     primary_handler = Awestruct::Handlers::StringHandler.new( @site, "this is the content" )
     layout_handler = Awestruct::Handlers::LayoutHandler.new( @site, primary_handler )
 
@@ -60,12 +59,8 @@ describe Awestruct::Handlers::LayoutHandler do
 
     context = page.create_context
 
-    @site.layouts['haml-layout'].should_not be_nil
+    @site.layouts.find_matching('haml-layout', '.html').should_not be_nil
     rendered = layout_handler.rendered_content( context )
-
-    puts "BEGIN rendered----"
-    puts rendered
-    puts "END rendered----"
 
     haml_index = ( rendered =~ %r(This is a haml layout) )
     awestruct_index = ( rendered =~ %r(Welcome to Awestruct) )

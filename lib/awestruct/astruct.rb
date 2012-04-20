@@ -4,9 +4,12 @@ module Awestruct
   class AStruct < Hash
 
     def initialize(hash=nil)
-      hash.each do |k,v|
-        self[k]=v
-      end
+      hash.each{|k,v| self[k]=v } if hash
+    end
+
+    def cascade_for_nils!
+      @cascade_for_nils = true 
+      self
     end
 
     def key?(key)
@@ -37,13 +40,18 @@ module Awestruct
         self[name]
       else
         if key?(name)
-          #self[name] = transform_entry(self[name])
+          self[name]
+        elsif @cascade_for_nils
+          self[name] = AStruct.new.cascade_for_nils! 
           self[name]
         else
           nil
         end
       end
     end
+
+    alias_method :original_entries, :entries
+    undef entries
 
     def transform_entry(entry)
       case(entry)

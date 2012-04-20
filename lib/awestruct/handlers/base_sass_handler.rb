@@ -24,7 +24,7 @@ module Awestruct
         simple_name + '.css'
       end
 
-      def rendered_content(context)
+      def rendered_content(context, with_layouts=true)
         sass_opts = Compass.sass_engine_options
         sass_opts[:load_paths] ||= []
         Compass::Frameworks::ALL.each do |framework|

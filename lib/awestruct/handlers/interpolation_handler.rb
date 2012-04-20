@@ -9,7 +9,7 @@ module Awestruct
         super( site, delegate )
       end
 
-      def rendered_content(context)
+      def rendered_content(context, with_layouts=true)
         content = delegate.raw_content
 
         return nil if content.nil?

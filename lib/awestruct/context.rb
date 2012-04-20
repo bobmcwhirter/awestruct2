@@ -8,8 +8,10 @@ module Awestruct
     attr_accessor :page
 
     def initialize(hash)
+      super 
       @page = hash[:page]
       @site = hash[:site]
+     
     end 
 
     def inspect

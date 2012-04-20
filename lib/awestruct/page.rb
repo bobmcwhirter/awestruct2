@@ -37,13 +37,9 @@ module Awestruct
 
 
     def inherit_front_matter_from(hash)
-      puts "#{self.inspect} INHERIT #{hash.inspect}"
       hash.each do |k,v|
         unless ( key?( k ) )
-          puts "  #{k}=#{v}"
           self[k.to_sym] = v
-        else
-          puts "  skip #{k}=#{v}"
         end
       end
     end
@@ -58,6 +54,10 @@ module Awestruct
 
     def output_path
       (@output_path || handler.output_path).to_s
+    end
+
+    def output_extension
+      handler.output_extension
     end
 
     def output_path=(path)
@@ -85,12 +85,12 @@ module Awestruct
       handler.raw_content
     end
 
-    def rendered_content(context=create_context())
-      handler.rendered_content( context )
+    def rendered_content(context=create_context(), with_layouts=true)
+      handler.rendered_content( context, with_layouts )
     end
 
     def content
-      rendered_content
+      rendered_content( create_context(), false )
     end
 
 

@@ -34,4 +34,23 @@ describe Awestruct::Handlers::HamlHandler do
     rendered.should =~ %r(<h1>This is a HAML page</h1>) 
   end
 
+  it "should provide the correct output extension" do
+    file_handler = Awestruct::Handlers::FileHandler.new( @site, handler_file( "haml-page.html.haml" ) )
+    haml_handler = Awestruct::Handlers::HamlHandler.new( @site, file_handler )
+
+    haml_handler.output_extension.should == '.html'
+
+    file_handler = Awestruct::Handlers::FileHandler.new( @site, handler_file( "haml-page.xml.haml" ) )
+    haml_handler = Awestruct::Handlers::HamlHandler.new( @site, file_handler )
+
+    haml_handler.output_extension.should == '.xml'
+  end
+
+  it "should provide the correct simple name" do
+    file_handler = Awestruct::Handlers::FileHandler.new( @site, handler_file( "haml-page.html.haml" ) )
+    haml_handler = Awestruct::Handlers::HamlHandler.new( @site, file_handler )
+
+    haml_handler.simple_name.should == 'haml-page'
+  end
+
 end

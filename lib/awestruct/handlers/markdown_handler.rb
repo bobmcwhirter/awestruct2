@@ -22,7 +22,7 @@ module Awestruct
         :markdown
       end
 
-      def rendered_content(context)
+      def rendered_content(context, with_layouts=true)
         doc = RDiscount.new( raw_content )
         doc.to_html
       end

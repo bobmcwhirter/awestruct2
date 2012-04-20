@@ -40,7 +40,7 @@ module Awestruct
         @content
       end
 
-      def rendered_content(context)
+      def rendered_content(context, with_layouts=true)
         raw_content
       end
 

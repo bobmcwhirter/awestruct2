@@ -34,9 +34,7 @@ module Awestruct
     end
 
     def mixin_helpers(context)
-      puts "mixing in helpers"
       @helpers.each do |h|
-        puts " + #{h}"
         context.extend(h)
       end
     end

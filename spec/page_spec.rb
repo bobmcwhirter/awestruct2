@@ -48,7 +48,6 @@ describe Awestruct::Handlers::FileHandler do
 
   it "should be able to create an appropriate context" do
     context = @page.create_context
-    puts context.site.inspect
     context.site.should == @site
     context.page.should == @page
     context.content.should == ''

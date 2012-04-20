@@ -3,18 +3,10 @@ module Awestruct
 
   class Layouts < Array
 
-    def [](arg)
-      case ( arg )
-        when Fixnum
-          return super( arg )
-        else
-          return find_by_simple_name( arg )
-      end
-    end
-
-    def find_by_simple_name(arg)
+    def find_matching(simple_name, output_extension)
+      puts "look for #{simple_name} #{output_extension}"
       self.find{|e| 
-        e.simple_name == arg
+        ( e.simple_name == simple_name ) && ( e.output_extension == output_extension )
       }
     end
 

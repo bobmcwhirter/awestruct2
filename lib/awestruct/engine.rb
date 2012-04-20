@@ -83,8 +83,7 @@ module Awestruct
           obj.each do |k,v|
             result[k] = massage_yaml(v)
           end
-          #result = AStruct.new(result.inject({}) { |memo, (k, v)| memo[k.to_sym] = v; memo })
-          result = AStruct.new( result )
+          result = AStruct.new( result ).cascade_for_nils!
         when Array
           result = []
           obj.each do |v|

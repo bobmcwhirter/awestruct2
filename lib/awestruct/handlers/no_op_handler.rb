@@ -25,7 +25,7 @@ module Awestruct
         nil
       end
 
-      def rendered_content(context)
+      def rendered_content(context, with_layouts=true)
         nil
       end
 

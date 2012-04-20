@@ -35,6 +35,11 @@ module Awestruct
         File.join( File.dirname( relative_source_path ), output_filename )
       end
 
+      def output_extension
+        return @delegate.output_extension if @delegate
+        File.extname( output_filename )
+      end
+
       def path
         return @delegate.path if @delegate
         nil
@@ -55,8 +60,8 @@ module Awestruct
         nil
       end
 
-      def rendered_content(context)
-        return @delegate.rendered_content(context) if @delegate
+      def rendered_content(context, with_layouts=true)
+        return @delegate.rendered_content(context, with_layouts) if @delegate
         nil
       end
 
@@ -66,7 +71,6 @@ module Awestruct
       end
 
       def inherit_front_matter(page)
-        puts "inherit front-matter from #{self.class} to #{page.inspect}"
         @delegate.inherit_front_matter(page) if @delegate
       end
 

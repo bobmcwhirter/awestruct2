@@ -12,14 +12,18 @@ module Awestruct
       end
 
       def simple_name
-        File.basename( relative_source_path, '.html.haml' )
+        File.basename( relative_source_path, "#{output_extension}.haml" )
       end
 
       def output_filename
         File.basename( relative_source_path, '.haml' )
       end
 
-      def rendered_content(context)
+      def output_extension
+        File.extname( File.basename( path, '.haml' ) )
+      end
+
+      def rendered_content(context, with_layouts=true)
         options = context.site.haml? ? context.site.haml : {}
         options = options.inject({}){ |hash,(key,value)| 
           hash[key.to_sym] = value
