@@ -43,10 +43,13 @@ module Awestruct
           if ( page )
             #inherit_front_matter( page )
             site.send( @target ) << page
+            pages << page
           end
         end
       end
-      pages.each{|p| p.prepare!} if ( prepare == :post )
+      if ( prepare == :post )
+        pages.each{|p| p.prepare!} 
+      end
     end
 
     def load_page(path,prepare=:inline)

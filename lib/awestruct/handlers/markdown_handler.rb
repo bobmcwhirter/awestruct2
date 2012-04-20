@@ -18,6 +18,10 @@ module Awestruct
         File.basename( relative_source_path, '.md' ) + '.html'
       end
 
+      def output_extension
+        '.html'
+      end
+
       def content_syntax
         :markdown
       end

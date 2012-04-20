@@ -1,5 +1,6 @@
 
 require 'awestruct/handler_chains'
+require 'awestruct/context_helper'
 
 module Awestruct
 
@@ -34,6 +35,7 @@ module Awestruct
     end
 
     def mixin_helpers(context)
+      context.extend( Awestruct::ContextHelper )
       @helpers.each do |h|
         context.extend(h)
       end

@@ -19,11 +19,8 @@ module Awestruct
       end
 
       def for_layout_chain(page, &block)
-        puts "CHAIN #{page.inspect}"
-        puts "CHAIN #{page.output_extension}"
         current_page = page 
         while ( ! ( current_page.nil? || current_page.layout.nil? ) )
-          puts "CHAIN.cp #{current_page.output_extension}"
           current_page = site.layouts.find_matching( current_page.layout, current_page.output_extension )
           if ( ! current_page.nil? )
             block.call( current_page )
@@ -38,7 +35,7 @@ module Awestruct
           for_layout_chain(context.__effective_page || context.page) do |layout|
             context.content = content
             context.__effective_page = layout
-            content = layout.rendered_content( context )
+            content = layout.rendered_content( context, true )
           end
         end
 
