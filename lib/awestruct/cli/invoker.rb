@@ -36,8 +36,8 @@ module Awestruct
         invoke_force()     if ( options.force )
         invoke_generate()  if ( options.generate )
         invoke_deploy()    if ( options.deploy )
-        invoke_auto()      if ( options.auto )
         invoke_server()    if ( options.server )
+        invoke_auto()      if ( options.auto )
 
         wait_for_completion()
       end
@@ -84,7 +84,7 @@ module Awestruct
       end
 
       def invoke_auto()
-        Awestruct::CLI::Auto.new.run
+        run_in_thread( Awestruct::CLI::Auto.new( config.dir ) )
       end
 
       def invoke_server()

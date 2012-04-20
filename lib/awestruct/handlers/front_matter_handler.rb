@@ -34,7 +34,7 @@ module Awestruct
       private
 
       def parse_parts
-        return if @parsed_parts
+        return if ( @parsed_parts && ! delegate.stale? )
 
         full_content = delegate.raw_content
         full_content.force_encoding(site.encoding) if site.encoding

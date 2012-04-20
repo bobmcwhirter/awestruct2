@@ -83,9 +83,7 @@ module Awestruct
     end
 
     def input_mtime
-      t = handler.input_mtime( self )
-      puts "#{self.source_path} #{t}" if ( self.source_path =~ /layouts/ )
-      t
+      handler.input_mtime( self )
     end
 
     def collective_dependencies_mtime

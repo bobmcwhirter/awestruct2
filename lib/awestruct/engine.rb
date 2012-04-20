@@ -23,7 +23,16 @@ module Awestruct
     attr_reader :site
     attr_reader :pipeline
 
+    def self.instance
+      @instance
+    end
+
+    def self.instance=(engine)
+      @instance = engine
+    end
+
     def initialize(config=Awestruct::Config.new)
+      Engine.instance = self
       @site = Site.new( self, config)
       @pipeline = Pipeline.new
       @site_page_loader = PageLoader.new( @site )
@@ -102,6 +111,7 @@ module Awestruct
 
     def set_urls(pages)
       pages.each do |page|
+        #puts "relative_source_path #{page.relative_source_path}"
         page_path = page.output_path
         if ( page_path =~ /^\// )
           page.url = page_path
@@ -158,12 +168,28 @@ module Awestruct
       @site.pages.each do |page|
         generated_path = File.join( site.config.output_dir, page.output_path )
         if ( page.stale_output?( generated_path ) )
-          puts "Generating: #{generated_path}"
-          FileUtils.mkdir_p( File.dirname( generated_path ) )
-          File.open( generated_path, 'w' ) do |file|
-            file << page.rendered_content
-          end
+          generate_page( page, generated_path )
         end
+      end
+    end
+
+    def generate_page(page, generated_path)
+      puts "Generating: #{generated_path}"
+      FileUtils.mkdir_p( File.dirname( generated_path ) )
+      File.open( generated_path, 'w' ) do |file|
+        file << page.rendered_content
+      end
+    end
+
+    def generate_page_by_output_path(path)
+      full_path = File.join( '', path )
+      #puts "regen path #{full_path}"
+      page = site.pages.find{|p| p.relative_source_path.to_s==full_path}
+      if ( page.nil? )
+        #puts "Unable to locate page for #{path}"
+      else
+        generated_path = File.join( site.config.output_dir, page.output_path )
+        generate_page(page, generated_path)
       end
     end
 

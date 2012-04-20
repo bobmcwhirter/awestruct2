@@ -14,6 +14,7 @@ module Awestruct
       end
 
       def stale?
+        return @delegate.stale? if @delegate
         false
       end
 
