@@ -72,6 +72,7 @@ module Awestruct
       end
 
       def invoke_force()
+        FileUtils.rm_rf( config.output_dir )
       end
 
       def invoke_generate()
