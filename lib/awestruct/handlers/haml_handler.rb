@@ -12,7 +12,7 @@ module Awestruct
       end
 
       def simple_name
-        File.basename( relative_source_path, "#{output_extension}.haml" )
+        File.basename( self.path, "#{output_extension}.haml" )
       end
 
       def output_filename

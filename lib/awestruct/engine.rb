@@ -157,10 +157,12 @@ module Awestruct
     def generate_output
       @site.pages.each do |page|
         generated_path = File.join( site.config.output_dir, page.output_path )
-        puts "Generating: #{generated_path}"
-        FileUtils.mkdir_p( File.dirname( generated_path ) )
-        File.open( generated_path, 'w' ) do |file|
-          file << page.rendered_content
+        if ( page.stale_output?( generated_path ) )
+          puts "Generating: #{generated_path}"
+          FileUtils.mkdir_p( File.dirname( generated_path ) )
+          File.open( generated_path, 'w' ) do |file|
+            file << page.rendered_content
+          end
         end
       end
     end

@@ -11,6 +11,20 @@ module Awestruct
         super( site, delegate )
       end
 
+      def input_mtime(page)
+        t = delegate.input_mtime( page )
+        for_layout_chain(page) do |layout|
+          layout_mtime = layout.input_mtime
+          if ( t == nil )
+            t = layout_mtime
+          elsif ( layout_mtime > t )
+            t = layout_mtime
+          end
+        end
+        page_mtime = delegate.input_mtime( page )
+        t
+      end
+
       def inherit_front_matter(page)
         delegate.inherit_front_matter( page )
         for_layout_chain(page) do |layout|

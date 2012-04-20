@@ -35,6 +35,10 @@ module Awestruct
         false
       end
 
+      def input_mtime(page)
+        path.mtime
+      end
+
       def raw_content
         read
         @content

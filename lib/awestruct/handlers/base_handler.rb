@@ -17,8 +17,14 @@ module Awestruct
         false
       end
 
+      def input_mtime(page)
+        return @delegate.input_mtime(page) if @delegate
+        0
+      end
+
       def simple_name
-        @delegate.simple_name
+        return @delegate.simple_name if @delegate
+        nil
       end
 
       def relative_source_path 

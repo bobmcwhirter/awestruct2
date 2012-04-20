@@ -35,7 +35,6 @@ module Awestruct
       context
     end
 
-
     def inherit_front_matter_from(hash)
       hash.each do |k,v|
         unless ( key?( k ) )
@@ -75,6 +74,30 @@ module Awestruct
 
     def stale?
       handler.stale? || @dependencies.any?(&:stale?) 
+    end
+
+    def stale_output?(output_path)
+      return true if ! File.exist?( output_path )  
+      return true if input_mtime > File.mtime( output_path )
+      false
+    end
+
+    def input_mtime
+      t = handler.input_mtime( self )
+      puts "#{self.source_path} #{t}" if ( self.source_path =~ /layouts/ )
+      t
+    end
+
+    def collective_dependencies_mtime
+      t = nil
+      @dependencies.each do |e|
+        if ( t == nil )
+          t = e.mtime
+        elsif ( t < e.mtime )
+          t = e.mtime
+        end
+      end
+      t 
     end
 
     def content_syntax
