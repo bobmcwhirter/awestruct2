@@ -12,7 +12,6 @@ module Awestruct
 
       def execute(site)
         Dir[ "#{site.dir}/#{@data_dir}/*" ].each do |entry|
-          puts "entry #{entry}"
           if ( File.directory?( entry ) )
             data_key = File.basename( entry )
             data_map = {}
